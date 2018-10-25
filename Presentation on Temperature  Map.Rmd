@@ -1,0 +1,121 @@
+---
+title: "Temperature Map, Germany"
+author: "Ummehani"
+date: "October 25, 2018"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Temperature Map of Germany
+
+Based on 2016 Temparture Data
+
+ISO code of Germany, DEU; Data aquired from= "getData"
+
+Level of boundary, 1
+
+Temperature Data aquired from = "worldclim", tmean, tmax, tmin
+
+Longitute, 10;
+
+Latiture, 51;
+
+Resolution, 0.5
+
+## Map of Germany
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(raster)
+germany <- getData("GADM", country="DEU", level=1) # make the country boundary
+plot(germany) #plot germany
+```
+
+## Mean Annaul Temperature of Germany
+
+```{r}
+temp <- getData("worldclim", var="tmean", res=0.5, lon=10, lat=51) # data acquisition for temp mean
+plot(temp) # plot the tmean graph
+```
+
+## Maximum Annual Temperature of Germany
+
+```{r}
+temp_max <- getData("worldclim", var="tmax", res=0.5, lon=10, lat=51) # data acquisition for temp mean
+plot(temp_max) # plot the tmean graph
+```
+
+## Minimum Annual Temperature of Germany
+
+```{r}
+temp_min <- getData("worldclim", var="tmin", res=0.5, lon=10, lat=51) # data acquisition for temp mean
+plot(temp_min) # plot the tmean graph
+```
+
+## Map of Mean Temperature (Cropping)
+
+```{r}
+temp_ger1 <- crop(temp, germany) # crop to extent map of germany
+spplot(temp_ger1) # plot crop output
+```
+
+## Map of Mean Temperature (Masking)
+
+```{r}
+temp_ger2 <- mask(temp_ger1, germany) # mask to shape the map of germany
+spplot(temp_ger2) # plot the output
+```
+
+
+## Map of Max Temperature (Cropping)
+
+```{r}
+temp_ger3 <- crop(temp_max, germany) # crop to extent map of germany
+spplot(temp_ger3) # plot crop output
+```
+
+## Map of Max Temperature (Masking)
+
+```{r}
+temp_ger4 <- mask(temp_ger3, germany) # masking to shape map of germany
+spplot(temp_ger4) #plot the result
+```
+
+
+## Map of Min Temperature (Cropping)
+
+```{r}
+temp_ger5 <- crop(temp_min, germany) # crop to extent map of germany
+spplot(temp_ger5) # plot crop output
+```
+
+# Map of Min Temperature (Masking)
+
+```{r}
+temp_ger6 <- mask(temp_ger5, germany) # masking to shape map of germany
+spplot(temp_ger6) #plot the result
+```
+
+## Map of Max Temperature
+
+```{r}
+temp_ger4 <- mask(temp_ger3, germany) # masking to shape map of germany
+spplot(temp_ger4) #plot the result
+```
+
+## Map of Mean Temperature
+
+```{r}
+temp_ger2 <- mask(temp_ger1, germany) # mask to shape the map of germany
+spplot(temp_ger2) # plot the output
+```
+
+## Map of Min Temperature
+
+```{r}
+temp_ger6 <- mask(temp_ger5, germany) # masking to shape map of germany
+spplot(temp_ger6) #plot the result
+```
+
